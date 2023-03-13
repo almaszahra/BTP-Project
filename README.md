@@ -7,8 +7,8 @@ MS2
 
 |Milestone| Revision | Approximate<br />Workload (days) | Overview | Comments |
 |------|:---:|:----:|:----|:----| 
-| [MS1](#milestone-1) | V0.9 | 5 |   |  |
-| [MS2](#milestone-2) | V1.0 | 9|   |  |
+| [MS1](#milestone-1) | V0.9 | 5 | [Watch](https://youtu.be/2OWD-szjMIw)  |  |
+| [MS2](#milestone-2) | V1.0 | 9|  [Watch](https://youtu.be/A9a4i5TChAc) |  |
 | [MS3](#milestone-3) |  | 10|   |  |
 | [MS4](#milestone-4) |  | 4 |  |  |
 | [MS5](#milestone-5) |  | 14 | |  |
@@ -434,7 +434,7 @@ To find out what is the maximum valid value for a calendar day in a month you ca
 ### Date Construction
 - By default date is created and set to the current system date and will be set not to be date-only (it will include the hour and the minute)
 - A date can get created by receiving the date; (year, month and day values only). In this case, the Date object will be set to date-only mode. After the attributes are set, they are [validated](#date-validation-process). 
-- A date can get created using date and time; (hour, month, day, hour and minute). In this case, the Date object will not be set to date-only mode. After the attributes are set, they are [validated](#date-validation-process).
+- A date can get created using date and time; (year, month, day, hour and minute). In this case, the Date object will not be set to date-only mode. After the attributes are set, they are [validated](#date-validation-process).
 
 ### Comparison Operator Overloads
 Overload all the comparison operator overloads to compare two date objects and return a boolean.
