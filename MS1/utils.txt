@@ -1,0 +1,54 @@
+#ifndef SDDS_UTILS_H
+#define SDDS_UTILS_H
+#include "PosApp.h"
+#include <iostream>
+
+namespace sdds
+{
+	class
+	{
+	public:
+		Utils(){};
+		~Utils();
+		//displays menu items
+		void display(PosApp& p, std::ostream& = std::cout, std::istream& = std::cin) const;
+		//reads user input
+		bool read(PosApp& p, std::istream = std::cin);
+	}
+
+}
+
+#endif
+
+//Utils.cpp
+#include "Utils.h"
+namespace sdds
+{
+	void Utils::display(PosApp& p, std::ostream& out, std::istream& in) const
+	{
+		bool stop = true;
+		do
+		{
+			out << "The Sene-Store" << std::endl << "1- List items" << std::endl << "2- Add item" << std::endl << "3- Remove item" << std::endl << " 4- Stock item"  << std::endl << "5- Point of Sale"  << std::endl << "0- exit program" << std::endl;
+			out << "> ";
+			stop = read(in);
+		} while (stop)
+		
+	}
+
+	bool read(PosApp& p, std::istream in)
+	{
+		bool stop = false;
+		int num = -1;
+		in >> num;
+		while(!in)
+		{
+			
+			//clear the flag
+			in.clear();
+			//ignore new characters to avoid looping forever
+			in.ignore(numeric_limits<streamsize>::max(), '\n');
+			std::cout << "Invalid Integer, try again: ";
+		}
+	}
+}
