@@ -9,7 +9,7 @@ MS2
 |------|:---:|:----:|:----|:----| 
 | [MS1](#milestone-1) | V0.9 | 5 | [Watch](https://youtu.be/2OWD-szjMIw)  |  |
 | [MS2](#milestone-2) | V1.0 | 9|  [Watch](https://youtu.be/A9a4i5TChAc) |  |
-| [MS3](#milestone-3) |  | 10|   |  |
+| [MS3](#milestone-3) | V0.9| 10|   | The text is being proof-read |
 | [MS4](#milestone-4) |  | 4 |  |  |
 | [MS5](#milestone-5) |  | 14 | |  |
 
@@ -359,7 +359,7 @@ If an Error object is casted to a **bool**, it should return true if the message
   }
 ```
 #### `clear()` 
-This method clears the error message and returns the reference of the current Error object. After this, the Error object should be in a "no error" state.
+This method clears the error message and returns the reference of the current Error object. After this, the Error object should be in an "no Error" state with the message set to nullptr;
 
 #### ostream insertion
 The Error message should be able to be inserted into an ostream object using the **operator<<**. If the Error object is not in an error state nothing will be inserted into the ostream object.
@@ -509,6 +509,13 @@ After reading each integer, check the status of istream, if it is not in a fail 
 "Cannot read minute entry"
 ```
 
+##### Exmaple
+
+```text
+2023/10/abc, 20:20
+The Error message should be set to "Cannot read day entry" and extration is stopped having istream left in error sate
+```
+
 > Note if the Date is in read-only mode, after reading the three date integers, set hour and minute to zero.
 
 In any case, at the end return the reference of istream.
@@ -559,9 +566,218 @@ and follow the instructions.
 
 # Milestone 3
 
-> :construction: under construction
+Before starting milestone 3, add the following constant values to `POS.h` header file:
+
+## Additional constant values
+```text
+ MAX_NAME_LEN: 40
+
+ POS_LIST: 1
+ POS_FROM: 2
+
+ ERROR_POS_SKU: "SKU too long"
+ ERROR_POS_NAME: "Item name too long"
+ ERROR_POS_PRICE: "Invalid price value"
+ ERROR_POS_TAX: "Invalid tax status"
+ ERROR_POS_QTY: "Invalid quantity value"
+ ERROR_POS_STOCK: "Item out of stock"
+ ERROR_POS_EMPTY: "Invalid Empty Item"
+```
+
+For the third milestone of the project, you will create two classes: `PosIO` and `Item`. Milestone 3 is dependent on the `Error` class only. (You do not need the other classes created in milestones 1 and 2 at this stage)
+
+## PosIO interface 
+Create a class called `PosIO` as an interface for console and file input and output operations. This class will only define 4 pure virtual methods and a virtual empty destructor. 
+
+### Pure Virtual Methods
+#### write
+Receives and returns references of `ostream`. This method does not modify its owner.
+#### read
+Receives and returns references of `istream`. 
+#### save
+Receives and returns references of `ofstream`. This method does not modify its owner.
+#### load
+Receives and returns references of `ifstream`. 
+
+### Insertion and Extraction operator overloads.
+#### operator<<
+Implement two insertion `operator<<` operator overloads that invoke the `write` and `save` pure virtual methods to work with `ostream` and `ofstream`.
+
+#### operator>>
+Implement two extraction `operator>>` operator overloads that invoke the `read` and `load` pure virtual methods to work with `istream` and `ifstream`.
+
+## Item Abstract class
+Create a class called `Item` to encapsulate an Item to be sold by the POS system. 
+
+### Private Attributes
+The Item class has the following mandatory attributes:
+#### SKU
+A C-string to keep an SKU code up to `MAX_SKU_LEN` characters.
+#### Name
+A dynamically allocated C-string to keep the name of the `Item` up to `MAX_NAME_LEN` characters.
+#### Price
+A double value
+#### Taxed
+A boolean that indicates if the Item is taxable or not.
+#### Quantity 
+An integer value for the stock number of the `Item`.  (number of items in the shop)
+#### diaplayType
+An integer flag that can be either `POS_LIST` to display the Item in List mode or `POS_FROM` to display the Item in Form mode.
+
+### Protect Attribute
+#### Error State
+An Error object to keep the error status of the Item.
+
+### Constructor
+Item is instantiated using no arguments. In this case, an Item is set to an invalid Empty state (we will refer to this as `empty` from now on).
+
+### Rule of three
+An Item can be copied or assigned to another item safely and is destroyed with no memory leak.
+
+### Member operator overloads
+#### operator==
+Compares two Items and returns true if the `SKU` codes are identical.
+#### operator>
+Compares two items alphabetically based on their names.
+#### opertor+= 
+Adds an integer value (right-hand operand) to the quantity and returns the quantity. If the sum of the value and the quantity exceeds the `MAX_STOCK_NUMBER` then the quantity will be set to `MAX_STOCK_NUMBER` and the Item error will be set to `ERROR_POS_QTY`.
+#### operator-=
+Reduces the quantity by the right-hand value and returns the quantity. If the value is more than the quantity then the quantity will be set to zero and the Item error will be set to `ERROR_POS_STOCK`.
+
+#### bool type conversion
+Returns the opposite of the status of the error attribute. This method does not modify the object.
+
+### helper += operator overload
+Overload the `operator+=` to receive a double reference as the left-hand operand and a constant reference of Item as the right-hand operator. This operator should add the product of [cost()](#cost-query) by [quantity()](#quantity-query) of the Item to the double operand and then return the value.
+
+### Member function (Methods)
+
+#### itemType query
+This pure virtual method returns a character as the type indicator of the item in future descendants of the Item. This method does not modify the object.
+  
+#### displayType
+Receives an integer (`POS_LIST` or `POS_FROM`) and sets the corresponding attribute. This method returns the reference of the current object.
+
+#### cost query
+Returns the cost of the Item; that is the price of the item (plus tax if the item is taxable). This method does not modify the object.
+
+#### quantity query
+Returns the quantity of the Item. This method does not modify the object.
+
+#### clear
+Clears the error status of the object and then returns the reference of the current object.
+
+### IO
+Implement the four pure virtual methods of the base class as follows:
+#### write
+1. If in POS_LIST mode, it will print the object as follows:
+```text
+1234   |Screw Driver        |  12.32| X |  90|  1252.94|
+4567   |Tape Measure - Level| 112.30|   |  10|  1123.00|
+```
+- Name: if longer than 20 characters, only the first 20 will be printed
+- Taxed: if true `X` is printed or else space
+- After the line is printed, no newlines are printed.
+
+2. If in POS_FORM mode, it will print as follows:
+```text
+=============v
+Name:        Screw Driver
+Sku:         1234
+Price:       12.32
+Price + tax: 13.92
+Stock Qty:   90
+=============v
+Name:        Tape Measure - Level - Laser - Combo
+Sku:         4567
+Price:       112.30
+Price + tax: N/A
+Stock Qty:   10
+```
+- At the end, a newline is printed.
+3. If the Item is erroneous only the error object is printed (with no newline after).
+
+In the end, the ostream reference is returned.
+
+#### save
+Save the data in a comma-separated format as follows:<br />
+First, the [itemType](#itemtype-query) is printed and then all the attributes are saved separated by commas. No newline is saved at the end.<br />
+In the following example, we assume the derived class's [itemType](#itemtype-query) function is returning 'T'.
+```text
+T,1234,Screw Driver,12.32,1,89
+T,4567,Tape Measure - Level - Laser - Combo,112.30,0,9
+```
+If the Item is erroneous the error object is inserted into `cerr` and not the ofstream  (with a newline after).
+
+In the end, the ofstream reference is returned.
+
+#### read
+Performs fool-proof data entry.
+
+The attributes are read in the following order:<br />
+SKU, Name, Price, Taxed or not and Quantity.
+
+After each data entry, the value is validated, if invalid the [proper error message](#additional-constant-values) is printed and in the next line at the prompt (`>`) the value is re-entered. This repeats until a valid value is entered. See [Execution Sample](#execution-sample).
+
+In the end, the reference of istream is returned.
+
+```text
+Sku
+> 12345
+Name
+> Hammer
+Price
+> 23.99
+Taxed?
+(Y)es/(N)o: y
+Quantity
+> 35
+```
+
+
+#### load
+First, the error status will be [clear](#clear-1)ed
+
+Then reads all the values from the ifstream object in a comma-separated format (assuming the data begins with the SKU) in local variables (not directly into the attributes of the item). 
+
+If after the reading the ifstream is not in a failure state, it will validate the values one by one and if any of the validation fails, the error message is set to the proper message and validation stops.
+
+At the end of the validation process, if there is no error, the attributes are set to the validated values.
+
+The reference of the ifstream object is returned at the end.
+
+#### billPrint
+This function will receive and return the ostream object.
+The bill print function will only print the Name, taxed price, and if the item is taxed or not:
+```text
+| Screw Driver        |     13.92 |  T  |
+| Tape Measure - Level|    112.30 |     |
+```
+- Name: only the first 20 characters are printed
+- Taxed: if the item is taxed, `T` and otherwise, a space is printed.
+
+### Tester program 
+<a href="MS3/main.cpp" target="_blank">main.cpp</a>
+
+### Execution sample
+<a href="MS3/correct_output.txt" target="_blank">correct_output.txt</a>
+
 
 ## MS3 Submission 
+
+### files to submit
+```text
+POS.h  
+Error.cpp
+Error.h
+PosIO.cpp
+PosIO.h
+Item.cpp
+Item.h
+Utils.cpp  
+Utils.h
+main.cpp
+```
 
 > If you would like to successfully complete the project and be on time, **start early** and try to meet all the due dates of the milestones.
 
