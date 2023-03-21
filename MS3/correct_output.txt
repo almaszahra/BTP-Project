@@ -12,7 +12,7 @@ Enter the following:
 11> 0
 12> 100
 13> 10
-Please enter the Tool infomation: 
+Please enter the Tool information: 
 Sku
 > 12345678
 SKU too long
@@ -85,8 +85,8 @@ T,4567,Tape Measure - Level - Laser - Combo,112.30,0,9
 T,1111,Chisel,10.00,0,9
 </thefile>
 1234   |Screw Driver        |  12.32| X |  99|  1378.24|
-Rocord number 1 SKU too long
-Rocord number 2 Item name too long
-Rocord number 3 Invalid price value
-Rocord number 4 Invalid quantity value
+Record number 1 SKU too long
+Record number 2 Item name too long
+Record number 3 Invalid price value
+Record number 4 Invalid quantity value
 4567   |Tape Measure - Level| 112.30|   |  10|  1123.00|
