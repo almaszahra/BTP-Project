@@ -11,6 +11,7 @@ MS2
 | [MS2](#milestone-2) | V1.0 | 9|  [Watch](https://youtu.be/A9a4i5TChAc) |  |
 | [MS3](#milestone-3) | V0.9| 10|   | The text is being proof-read |
 |   | V0.91| |   | Fixed few typos |
+|   | V1.0| |   | Moved m_displayType to protected section for MS4 |
 | [MS4](#milestone-4) |  | 4 |  |  |
 | [MS5](#milestone-5) |  | 14 | |  |
 
@@ -622,10 +623,11 @@ A double value
 A boolean that indicates if the Item is taxable or not.
 #### Quantity 
 An integer value for the stock number of the `Item`.  (number of items in the shop)
+
+### Protect Attributes
+
 #### diaplayType
 An integer flag that can be either `POS_LIST` to display the Item in List mode or `POS_FORM` to display the Item in Form mode.
-
-### Protect Attribute
 #### Error State
 An Error object to keep the error status of the Item.
 
