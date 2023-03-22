@@ -9,7 +9,7 @@ MS2
 |------|:---:|:----:|:----|:----| 
 | [MS1](#milestone-1) | V0.9 | 5 | [Watch](https://youtu.be/2OWD-szjMIw)  |  |
 | [MS2](#milestone-2) | V1.0 | 9|  [Watch](https://youtu.be/A9a4i5TChAc) |  |
-| [MS3](#milestone-3) | V0.9| 10|   | The text is being proof-read |
+| [MS3](#milestone-3) | V0.9| 10|  [Watch](https://youtu.be/5oL2RdYeWuo) | The text is being proof-read |
 |   | V0.91| |   | Fixed few typos |
 |   | V1.0| |   | Moved m_displayType to protected section for MS4 |
 | [MS4](#milestone-4) |  | 4 |  |  |
