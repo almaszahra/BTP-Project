@@ -12,6 +12,7 @@ MS2
 | [MS3](#milestone-3) | V0.9| 10|  [Watch](https://youtu.be/5oL2RdYeWuo) | The text is being proof-read |
 |   | V0.91| |   | Fixed few typos |
 |   | V1.0| |   | Moved m_displayType to protected section for MS4 |
+|   | V1.1| |   | corrected operator== definition |
 | [MS4](#milestone-4) |  | 4 |  |  |
 | [MS5](#milestone-5) |  | 14 | |  |
 
@@ -639,7 +640,7 @@ An Item can be copied or assigned to another item safely and is destroyed with n
 
 ### Member operator overloads
 #### operator==
-Compares two Items and returns true if the `SKU` codes are identical.
+Compares an Item to a C-string and returns true if the C-sting is a match to the `SKU` code of the Item.
 #### operator>
 Compares two items alphabetically based on their names.
 #### opertor+= 
