@@ -14,7 +14,7 @@ MS2
 |   | V1.0| |   | Moved m_displayType to protected section for MS4 |
 |   | V1.1| |   | corrected operator== definition |
 |   | V1.2| |   | missing [itemType](#itemtype) function name is added  |
-| [MS4](#milestone-4) |  | 4 |  |  |
+| [MS4](#milestone-4) | V0.9 | 4 |  |  The text is being proof-read  |
 | [MS5](#milestone-5) |  | 14 | |  |
 
 
@@ -822,9 +822,117 @@ and follow the instructions.
 
 # Milestone 4
 
-> :construction: under construction
+
+## Non-perishable Item
+
+Inherit a concrete class called `NonPerishable` from the `Item` class.
+
+### itemType
+Override the pure virtual function `itemType` and return the character `'N'` to identify this `Item` to be non-perishable.
+
+### write 
+Override the write function to complete the writing of an `Item` in `POS_LIST` and `POS_FORM`.
+
+To accomplish this first make sure the Object is in a good state and then call the write of the Base class. 
+
+Then if the display type is  `LIST` then print the following to indicate this `Item` does not have an expiry date:
+```text
+"     N / A   |"
+```
+If the display type is `FORM` close the data display by printing the following line and printing newline:
+```text
+"=============^"
+```
+
+If the object is not in a good state, do nothing.
+
+# Perishable Item
+
+Inherit a concrete class called `Perishable` from the `Item` class.
+
+## Attribute
+
+Add a `Date` attribute for the expiry date of the `perishable` item.
+
+## Methods
+
+### itemType
+Override the pure virtual function `itemType` and return the character `'P'` to identify this `Item` to be `perishable`.
+
+
+## Input and Output Methods
+Override all the Input and output functions of the Base class as follows:
+
+### read
+Invoke the read of the Base class.
+
+If the object is not in a good state or `istream` has failed, do nothing, otherwise, if the object and the `istream` are in a good state, create a local instance of Date and set it to date only. then prompt the user as follows: 
+```text
+Expiry date(YYYY/MM/DD)
+> _
+```
+and extract the `date` from the `istream`. If the `date` is in a good state, set the expiry `date` to the extracted `date`, if not, set the error object of the Item to the error of the `Date`.  
+
+### write
+Invoke the write of the base class.
+
+If the object is not in a good state, do nothing otherwise, If the object is in `POS_LIST` display mode print the `date` as follows: 
+
+- space
+- date 
+- space
+- `'|'`
+
+If the object is in `POS_FORM` display mode print the `date` as follows:  
+
+- `"Expiry date: "`
+- Date
+- newline
+- `"=============^"`
+- newline
+
+### load
+Invoke the load of the Base class.
+
+If the object is not in a good state or `ifstream` has failed, do nothing, otherwise, if the object and the `ifstream` are in a good state, create a local instance of `Date` and set it to date only. Ignore one character to pass the `comma`. Then extract the `date` from the `ifstream`. If the `date` is in a good state, set the expiry date to the extracted `date`, if not, set the error object of the `Item` to the `error` of the `Date`.  
+
+### save
+Invoke the save of the Base class.
+
+If the object is in a good state, insert a comma and then the expiry date into `ofstream`, otherwise, do nothing.
+
+## Tester program
+
+<a href="MS4/main.cpp" target="_blank">main.cpp</a>
+
+## expected output
+
+<a href="MS4/correct_output.txt" target="_blank">correct_output.txt</a>
 
 ## MS4 Submission 
+
+### Files to submit
+
+```text
+POS.h 
+Date.cpp                       
+Date.h 
+Error.h
+Error.cpp
+PosIO.h
+PosIO.cpp  
+Item.h
+Item.cpp 
+NonPerishable.h
+NonPerishable.cpp
+Perishable.h
+Perishable.cpp  
+Utils.h
+Utils.cpp
+main.cpp
+nonPerInput.csv
+perishableInput.csv
+```
 
 > If you would like to successfully complete the project and be on time, **start early** and try to meet all the due dates of the milestones.
 
