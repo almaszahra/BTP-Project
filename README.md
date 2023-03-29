@@ -13,6 +13,7 @@ MS2
 |   | V0.91| |   | Fixed few typos |
 |   | V1.0| |   | Moved m_displayType to protected section for MS4 |
 |   | V1.1| |   | corrected operator== definition |
+|   | V1.2| |   | missing [itemType](#itemtype) function name is added  |
 | [MS4](#milestone-4) |  | 4 |  |  |
 | [MS5](#milestone-5) |  | 14 | |  |
 
@@ -655,6 +656,8 @@ Returns the opposite of the status of the error attribute. This method does not 
 Overload the `operator+=` to receive a double reference as the left-hand operand and a constant reference of Item as the right-hand operator. This operator should add the product of [cost()](#cost-query) by [quantity()](#quantity-query) of the Item to the double operand and then return the value.
 
 ### Member function (Methods)
+
+#### itemType
 
 This pure virtual method returns a character as the type indicator of the item in future descendants of the Item. This method does not modify the object.
   
