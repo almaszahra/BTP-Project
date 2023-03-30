@@ -1026,7 +1026,7 @@ Every time an action title is requested print the following:
 ## MS51
 
 ### loadRecs Method
-Implement the loadRecs module to load all the records of the data file into the `Iptr` array. Each `Iptr` pointer should point to a dynamically allocated Item (`Perishable` or `NonPerishable`).
+Implement the loadRecs method to load all the records of the data file into the `Iptr` array. Each `Iptr` pointer should point to a dynamically allocated Item (`Perishable` or `NonPerishable`).
 - Print the action title `Loading Items`.
 - open the data file in an `ifstream` object (we will call this `input` here).
 - if opening the file was not successful create the file by opening and closing it using an `ofstream` object.
@@ -1164,8 +1164,8 @@ Press <ENTER> to start....
 -----^--------^--------------------^-------^---^----^---------^-------------^
 Enter the row number: abc
 Invalid Integer, try again: -1
-[1<=value<=26], retry: Enter the row number: 8
-[1<=value<=26], retry: Enter the row number: 5
+[1<=value<=7], retry: Enter the row number: 8
+[1<=value<=7], retry: Enter the row number: 5
 ```
 The function will return 5
 
@@ -1234,6 +1234,9 @@ abc
 ## [Back to milestones](#milestones)
 
 ## MS54
+
+### stockItem
+
 When this option is selected, user will select an Item from the Items list and then the Item will be displayed on the screen in `POS_FORM` format. Then the user will be asked to add the number of items to be added to the quantity of the Item. This value can be between 1 and the current number of items minus the `MAX_STOCK_NUMBER`.
 After the user enters the number, it will be added to the quantity of the Item. 
 
