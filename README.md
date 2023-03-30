@@ -16,7 +16,9 @@ MS2
 |   | V1.2| |   | missing [itemType](#itemtype) function name is added  |
 | [MS4](#milestone-4) | V0.9 | 4 |  |  The text is being proof-read  |
 | [MS5](#milestone-5) | [m51](#ms51)-V0.9 | 14 | | The text is being proof-read |
-|  | [m52](#ms52)-V0.9 | 14 | | The text is being proof-read |
+|  | [m52](#ms52)-V0.9 |  | | The text is being proof-read |
+|  | [m53](#ms53)-V0.9 |  | | The text is being proof-read |
+|  | [m54](#ms54)-V0.9 |  | | The text is being proof-read |
 
 
 Your task for the project for this semester is to create simple Point of Sale (POS) application that keeps track of a small inventory of Goods to sell and can sell them at the cashier, issuing a bill of sale. 
@@ -1127,13 +1129,103 @@ y
 ## [Back to milestones](#milestones)
 
 
+## MS53
+To be able to remove an item, you must first provide the facility to select an Item.
+
+### selectItem 
+Implement a method called selectItem() to list the items EXACTLY like the `listItems` function (except that the total asset is not shown) and then ask the user to select an Item by entering the row number, and then return that row number.
+
+- Print the action title `Item Selection by row number`.
+- Then pause so the user can see what action is being taken by printing this prompt:<br />`Press <ENTER> to start....`
+- Print the action title `Listing Items`.
+- List the items (see hint below)
+- Prompt: `Enter the row number: `
+- perform a fool-proof entry of an integer between 1 and the number of `Item`s listed.
+- return the integer
+
+> hint: It would be nice to have your `listItems` method receive a bool argument to turn the total asset display on and off so you can reuse the function here.
+
+#### Execution example:  
+Assuming there are only 7 items in the system:
+
+```text
+>>>> Item Selection by row number............................................
+Press <ENTER> to start....
+>>>> Listing Items...........................................................
+ Row | SKU    | Item Name          | Price |TX |Qty |   Total | Expiry Date |
+-----|--------|--------------------|-------|---|----|---------|-------------|
+   1 | 5228   |7up 12 pack         |   6.49| X |  20|   146.67|  2017/05/31 |
+   2 | 7913   |Banana              |   0.44|   |  99|    43.56|  2017/05/21 |
+   3 | 3854   |Beefsteak Pie       |   5.29| X |  40|   239.11|  2017/05/25 |
+   4 | 3456   |Bic Pen(Blue)       |   1.49| X |  80|   134.70|     N / A   |
+   5 | 6458   |Blueberries         |   3.99|   |  30|   119.70|  2017/05/18 |
+   6 | 4567   |Butter              |   4.56| X |   9|    46.38|  2017/05/15 |
+   7 | 3815   |Chicken Alfredo     |   4.49| X |  20|   101.47|  2017/05/23 |
+-----^--------^--------------------^-------^---^----^---------^-------------^
+Enter the row number: abc
+Invalid Integer, try again: -1
+[1<=value<=26], retry: Enter the row number: 8
+[1<=value<=26], retry: Enter the row number: 5
+```
+The function will return 5
+
+### Remove Item
+Prompt the user and remove an item by letting the user select the item from the list of items.
+
+- Print the action title `Remove Item`.
+- call the selectItem to get the row number of the Item (row number is index + 1 in `Iptr` array)
+- print `Removing....` and show the item that is about to be removed in `POS_FROM` format.
+- deallocate and remove the item from the `Iptr` array (see illustration)
+- Print the action title `DONE!`.
+
+```text
+>>>> Remove Item.............................................................
+>>>> Item Selection by row number............................................
+Press <ENTER> to start....
+>>>> Listing Items...........................................................
+ Row | SKU    | Item Name          | Price |TX |Qty |   Total | Expiry Date |
+-----|--------|--------------------|-------|---|----|---------|-------------|
+   1 | 5228   |7up 12 pack         |   6.49| X |  20|   146.67|  2017/05/31 |
+   2 | 7913   |Banana              |   0.44|   |  99|    43.56|  2017/05/21 |
+   3 | 3854   |Beefsteak Pie       |   5.29| X |  40|   239.11|  2017/05/25 |
+   4 | 3456   |Bic Pen(Blue)       |   1.49| X |  80|   134.70|     N / A   |
+   5 | 6458   |Blueberries         |   3.99|   |  30|   119.70|  2017/05/18 |
+   6 | 4567   |Butter              |   4.56| X |   9|    46.38|  2017/05/15 |
+   7 | 3815   |Chicken Alfredo     |   4.49| X |  20|   101.47|  2017/05/23 |
+-----^--------^--------------------^-------^---^----^---------^-------------^
+Enter the row number: 5
+Removing....
+=============v
+Name:        Blueberries
+Sku:         6458
+Price:       3.99
+Price + tax: N/A
+Stock Qty:   30
+Expiry date: 2017/05/18
+=============^
+>>>> DONE!.................................................................
+
+```
+#### MS53 Illustration
+In this illustration user has selected item number `4`.
+
+![Remove Item](MS5/remove.png)
+
+
 ## MS53 submission test
-
-> :construction: under construction
-
 ### Data entry
-
+```text
+3
+<ENTER>
+abc
+-1
+27
+5
+0
+```
 ### Expected outcome
+
+<a href="MS5/m53_output.txt" target="_blank">m53_output.txt</a>
 
 ### MS53 Submission command
 ```
@@ -1141,14 +1233,72 @@ y
 ```
 ## [Back to milestones](#milestones)
 
+## MS54
+When this option is selected, user will select an Item from the Items list and then the Item will be displayed on the screen in `POS_FORM` format. Then the user will be asked to add the number of items to be added to the quantity of the Item. This value can be between 1 and the current number of items minus the `MAX_STOCK_NUMBER`.
+After the user enters the number, it will be added to the quantity of the Item. 
+
+- Print the action title `Select an item to stock`.
+- call the [seletItem method](#selectitem) and get the row number
+- Print `Selected Item:\n`
+- display the select Item
+- Prompt `Enter quantity to add: `
+- get and integer (fool-proof)
+- Add the quantity to the item
+- Print the action title `DONE!`.
+
+### execution sample
+```text
+>>>> Select an item to stock.................................................
+>>>> Item Selection by row number............................................
+Press <ENTER> to start....
+>>>> Listing Items...........................................................
+ Row | SKU    | Item Name          | Price |TX |Qty |   Total | Expiry Date |
+-----|--------|--------------------|-------|---|----|---------|-------------|
+   1 | 5228   |7up 12 pack         |   6.49| X |  20|   146.67|  2017/05/31 |
+   2 | 7913   |Banana              |   0.44|   |  99|    43.56|  2017/05/21 |
+   3 | 3854   |Beefsteak Pie       |   5.29| X |  40|   239.11|  2017/05/25 |
+   4 | 3456   |Bic Pen(Blue)       |   1.49| X |  80|   134.70|     N / A   |
+   5 | 6458   |Blueberries         |   3.99|   |  30|   119.70|  2017/05/18 |
+   6 | 4567   |Butter              |   4.56| X |   9|    46.38|  2017/05/15 |
+   7 | 3815   |Chicken Alfredo     |   4.49| X |  20|   101.47|  2017/05/23 |
+-----^--------^--------------------^-------^---^----^---------^-------------^
+Enter the row number: 5
+Selected Item:
+=============v
+Name:        Blueberries
+Sku:         6458
+Price:       3.99
+Price + tax: N/A
+Stock Qty:   30
+Expiry date: 2017/05/18
+=============^
+Enter quantity to add: abc
+Invalid Integer, try again: 0
+[1<=value<=69], retry: Enter quantity to add: 70
+[1<=value<=69], retry: Enter quantity to add: 10
+>>>> DONE!.................................................................
+```
 
 ## MS54 submission test
-
-> :construction: under construction
-
 ### Data entry
-### Expected outcome
-[m54-correct-output.txt](ms5/m54-correct-output.txt)
+
+```text
+4
+<ENTER>
+abc
+-1
+27
+5
+abc
+0
+70
+10
+0
+```
+
+### Expected output
+
+<a href="MS5/m54_output.txt" target="_blank">m54_output.txt</a>
 
 ### MS54 Submission command
 ```

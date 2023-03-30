@@ -38,7 +38,10 @@ The Sene-Store
 4- Stock item
 5- POS
 0- exit program
-> 1
+> 3
+>>>> Remove Item.............................................................
+>>>> Item Selection by row number............................................
+Press <ENTER> to start....
 >>>> Listing Items...........................................................
  Row | SKU    | Item Name          | Price |TX |Qty |   Total | Expiry Date |
 -----|--------|--------------------|-------|---|----|---------|-------------|
@@ -69,9 +72,20 @@ The Sene-Store
   25 | 9318   |Tide Detergent      |  16.99| X |  10|   191.99|     N / A   |
   26 | 5496   |Veal Parmigiana     |   5.49| X |   3|    18.61|  2017/05/24 |
 -----^--------^--------------------^-------^---^----^---------^-------------^
-                               Total Asset: $  |       3567.13|
------------------------------------------------^--------------^
-
+Enter the row number: abc
+Invalid Integer, try again: -1
+[1<=value<=26], retry: Enter the row number: 27
+[1<=value<=26], retry: Enter the row number: 5
+Removing....
+=============v
+Name:        Blueberries
+Sku:         6458
+Price:       3.99
+Price + tax: N/A
+Stock Qty:   30
+Expiry date: 2017/05/18
+=============^
+>>>> DONE!.................................................................
 The Sene-Store
 1- List items
 2- Add item
@@ -88,7 +102,6 @@ P,5228,7up 12 pack,6.49,1,20,2017/05/31
 P,7913,Banana,0.44,0,99,2017/05/21
 P,3854,Beefsteak Pie,5.29,1,40,2017/05/25
 N,3456,Bic Pen(Blue),1.49,1,80
-P,6458,Blueberries,3.99,0,30,2017/05/18
 P,4567,Butter,4.56,1,9,2017/05/15
 P,3815,Chicken Alfredo,4.49,1,20,2017/05/23
 P,3512,Coke 12 Pack,6.69,1,30,2017/05/29
