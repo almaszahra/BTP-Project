@@ -12,10 +12,12 @@
 |   | V1.1| |   | corrected operator== definition |
 |   | V1.2| |   | missing [itemType](#itemtype) function name is added  |
 | [MS4](#milestone-4) | V0.9 | 4 |  |  The text is being proof-read  |
+|  | V1.0 |  |  |  The [write oveload](#write-2) logic corrected   |
 | [MS5](#milestone-5) | [m51](#ms51)-V0.9 | 14 | | The text is being proof-read |
 |  | [m52](#ms52)-V0.9 |  | | The text is being proof-read |
 |  | [m53](#ms53)-V0.9 |  | | The text is being proof-read |
 |  | [m54](#ms54)-V0.9 |  | | The text is being proof-read |
+|  | [m55](#ms55)-V0.9 |  | | The text is being proof-read<br />[posdataOrigin.csv](MS5/posdataOrigin.csv) file updated to accommodate the ms55 tester |
 
 
 Your task for the project for this semester is to create simple Point of Sale (POS) application that keeps track of a small inventory of Goods to sell and can sell them at the cashier, issuing a bill of sale. 
@@ -831,11 +833,12 @@ Inherit a concrete class called `NonPerishable` from the `Item` class.
 Override the pure virtual function `itemType` and return the character `'N'` to identify this `Item` to be non-perishable.
 
 ### write 
+
 Override the write function to complete the writing of an `Item` in `POS_LIST` and `POS_FORM`.
 
-To accomplish this first make sure the Object is in a good state and then call the write of the Base class. 
+To accomplish this first call the write of the Base class and then if the Object is in a good state do the following:
 
-Then if the display type is  `LIST` then print the following to indicate this `Item` does not have an expiry date:
+If the display type is  `LIST` then print the following to indicate this `Item` does not have an expiry date:
 ```text
 "     N / A   |"
 ```
@@ -844,7 +847,7 @@ If the display type is `FORM` close the data display by printing the following l
 "=============^"
 ```
 
-If the object is not in a good state, do nothing.
+If the object is not in a good state, nothing extra is printed.
 
 # Perishable Item
 
@@ -1306,15 +1309,102 @@ abc
 ```
 ## [Back to milestones](#milestones)
 
+## MS55
+> The `posdataOrigin.csv` file is updated to accommodate the testing of this section, make sure to pull the change.
+
+To finalize your project implement the `POS()` method of the `PosApp` Module.
+
+In this method, you are to ask the user for the SKU of items to sell and if the SKU is found and the item is available (Quantity > 0) then reduce the quantity by one and add the item to the Bill and print the total price of the bill so far. 
+
+If instead of entering the SKU user just hits enter with no data entry, then you will finalize the sale by printing the Bill.
+
+### Execution sample
+```text
+>>>> Starting Point of Sale..................................................
+Enter SKU or <ENTER> only to end sale...
+> 1627
+=============v
+Name:        Peaches
+Sku:         1627
+Price:       1.44
+Price + tax: N/A
+Stock Qty:   13
+Expiry date: 2017/06/01
+=============^
+
+>>>>> Added to bill
+>>>>> Total: 1.44
+Enter SKU or <ENTER> only to end sale...
+> 4297
+=============v
+Name:        Lays Chips S&V
+Sku:         4297
+Price:       3.69
+Price + tax: 4.17
+Stock Qty:   0
+Expiry date: 2017/05/26
+=============^
+
+>>>>> Added to bill
+>>>>> Total: 5.61
+Enter SKU or <ENTER> only to end sale...
+> 4297
+Item out of stock
+Enter SKU or <ENTER> only to end sale...
+> 1111
+!!!!! Item Not Found !!!!!
+Enter SKU or <ENTER> only to end sale...
+>
+v---------------------------------------v
+| 2023/03/31, 10:44                     |
++---------------------v-----------v-----+
+| Item                |     Price | Tax +
++---------------------v-----------v-----+
+| Peaches             |      1.44 |     |
+| Lays Chips S&V      |      4.17 |  T  |
++---------------------^-----------^-----+
+| total:                     5.61 |
+^---------------------------------^
+```
+### Implementation
+
+To accomplish this we suggest the creation of a relatively simple method called `search` first. This method receives the SKU and returns the address of the item in the `Iptr` array if the matching SKU is found in the array, or otherwise nullptr.
+
+Having this function to implement the POS() method do the following:
+
+- Print the action title `Starting Point of Sale`.
+
+Keep getting the SKU (up to MAX_SKU_LEN characters) in a local C-string Until the SKU is empty and in the loop:
+
+- if SKU is not empty end the istream is not in a fail state
+     - Search for the item
+     - if found reduce the quantity by one and print the item in `POS_FORM` format.
+          - If reduction was successful add the item to the bill and print<br /> `>>>>> Added to bill`<br />`>>>>> Total: <bill total so far>`
+          - if the reduction was not successful, clear the error state of the item   
+     - if not found print:<br />`!!!!! Item Not Found !!!!!`
+- if istream is in a fail state print:<br />`SKU too long`<br /> and clear and flush the istream.
+
+After the loop print the bill.
+
 ## MS55 submission test
 ### Data entry
+```text
+5
+1111
+9318
+9318
+4297
+4297
+1212
+<ENTER>
+0
+```
 ### Expected outcome
+
+<a href="MS5/m55_output.txt" target="_blank">m55_output.txt</a>
 
 ### MS55 Submission command
 ```
 ~profname.proflastname/submit 2??/prj/m55 
 ```
 ## [Back to milestones](#milestones)
-
-
-
