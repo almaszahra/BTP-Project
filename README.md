@@ -1,8 +1,5 @@
 # Project: Simple Point Of Sale System
 
-## Latest Release
-MS2 
-
 ### Milestones
 
 |Milestone| Revision | Approximate<br />Workload (days) | Overview | Comments |
