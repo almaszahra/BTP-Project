@@ -13,11 +13,13 @@
 |   | V1.2| |   | missing [itemType](#itemtype) function name is added  |
 | [MS4](#milestone-4) | V0.9 | 4 | [Watch](https://youtu.be/urtlxJHtEC8) |  |
 |  | V1.0 |  |  |  The [write oveload](#write-2) logic corrected   |
-| [MS5](#milestone-5) | [m51](#ms51)-V1.0 | 14 | [Watch](https://youtu.be/E_CRdXMSgTE) | |
-|  | [m52](#ms52)-V1.0 |  | | [Tester data explained](#tester-data) |
+| [MS5](#milestone-5) | | 14 | [Watch](https://youtu.be/E_CRdXMSgTE) |[Tester data explained](#tester-data)  |
+|  | [m51](#ms51)-V1.1 | | | [Total Asset Calculation Precision](#total-asset-calculation) |
+|  | [m52](#ms52)-V1.0 |  | |  |
 |  | [m53](#ms53)-V1.0 |  | | |
 |  | [m54](#ms54)-V1.0 |  | |  |
 |  | [m55](#ms55)-V1.0 |  | | |
+
 
 
 Your task for the project for this semester is to create simple Point of Sale (POS) application that keeps track of a small inventory of Goods to sell and can sell them at the cashier, issuing a bill of sale. 
@@ -1053,7 +1055,12 @@ Implement the saveRecs to save all the items pointed by `Iptr` array in the data
 - loop through the Items pointed by the `Iptr` pointers and insert them into the ofstream instance up to `nptr`.
 
 
+
+
 ### listItems
+
+
+
 - Print the action title `Listing Items`.
 - <a href="https://intro2c.sdds.ca/F-Refinements/algorithms#sorting" target="_blank">Sort all the Items</a> in `Iptr` array based on their name in ascending order. 
 - Print the Title/Header of the list: 
@@ -1061,13 +1068,24 @@ Implement the saveRecs to save all the items pointed by `Iptr` array in the data
  Row | SKU    | Item Name          | Price |TX |Qty |   Total | Expiry Date |
 -----|--------|--------------------|-------|---|----|---------|-------------|
 ```
-- Loop through the items up to `nptr` and display the row and the `Items` in `POS_LIST` format, calculating the total asset value of the `Items`.
+- Loop through the items up to `nptr` and display the row and the `Items` in `POS_LIST` format, calculating the total asset value of the `Items`. Total asset is the sum of (cost() * quantity) of each item. see [Total asset calculation](#total-asset-calculation)
 - Print the footer and the total asset as follows:
 ```text
 -----^--------^--------------------^-------^---^----^---------^-------------^
-                               Total Asset: $  |       3567.13|
+                               Total Asset: $  |       9999.99|
 -----------------------------------------------^--------------^
 ```
+
+#### Total asset calculation 
+
+> Note: to make sure not to have a different outcome for the total asset because of the `double` type's imprecise operations, add this method to your item to calculate the cost of an item, having `m_price` being the price of the item and `m_taxed` the flag for the item being taxed or not:  
+    
+```C++
+  double Item::cost()const {
+      return m_price * (1 + m_taxed * TAX);
+  }
+```
+
 
 ## MS51 submission 
 
