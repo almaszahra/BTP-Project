@@ -8,7 +8,7 @@
 | [MS2](#milestone-2) | V1.0 | 9|  [Watch](https://youtu.be/A9a4i5TChAc) |  |
 | [MS3](#milestone-3) | V0.9| 10|  [Watch](https://youtu.be/5oL2RdYeWuo) | |
 |   | V0.91| |   | Fixed few typos |
-|   | V1.0| |   | Moved m_displayType to protected section for MS4 |
+|   | V1.0| |   | Moved m` _displayType to protected section for MS4 |
 |   | V1.1| |   | corrected operator== definition |
 |   | V1.2| |   | missing [itemType](#itemtype) function name is added  |
 | [MS4](#milestone-4) | V0.9 | 4 | [Watch](https://youtu.be/urtlxJHtEC8) |  |

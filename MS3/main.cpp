@@ -8,10 +8,16 @@
 // for submission.
 //
 /////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <fstream>
 #include "Item.h"
-
+/*
+Joshua Dinham
+121572226
+BTC200NAA
+All work completed by me
+*/
 using namespace sdds;
 using namespace std;
 class Tool :public Item {
